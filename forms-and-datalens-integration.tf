@@ -15,7 +15,7 @@ locals {
 
   # This settings enables creation of the Cloud Function and its binding
   # Change it only after all the infrastructure resources have been created.
-  create_function = 0 # Set this setting to 1 to enable creation of the Cloud Function
+  create_function = 1 # Set this setting to 1 to enable creation of the Cloud Function
 }
 
 resource "yandex_vpc_network" "mynet" {
@@ -99,11 +99,6 @@ resource "yandex_iam_service_account_static_access_key" "s3-sa-static-key" {
   service_account_id = yandex_iam_service_account.forms-sa.id
 }
 
-resource "yandex_iam_service_account_api_key" "forms-sa-api-key" {
-  description        = "API key for binding the Cloud function to the form in Yandex Forms"
-  service_account_id = yandex_iam_service_account.forms-sa.id
-}
-
 # Bucket for output data from the form in Yandex Forms
 resource "yandex_storage_bucket" "data-bucket" {
   bucket     = "forms-integration-bucket"
@@ -180,4 +175,3 @@ resource "yandex_function_iam_binding" "function-iam" {
     "system:allUsers",
   ]
 }
-
