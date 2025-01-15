@@ -15,7 +15,7 @@ locals {
 
   # This settings enables creation of the Cloud Function and its binding
   # Change it only after all the infrastructure resources have been created.
-  create_function = 1 # Set this setting to 1 to enable creation of the Cloud Function
+  create_function = 0 # Set this setting to 1 to enable creation of the Cloud Function
 }
 
 resource "yandex_vpc_network" "mynet" {
@@ -125,8 +125,8 @@ resource "yandex_function" "test-function" {
   user_hash          = "version-one"
   runtime            = "python312"
   entrypoint         = "forms-integration.handler"
-  memory             = "1024"
-  execution_timeout  = "10"
+  memory             = "1024" # MB
+  execution_timeout  = "10"   # seconds
   service_account_id = yandex_iam_service_account.forms-sa.id
   count              = local.create_function
 
@@ -172,6 +172,6 @@ resource "yandex_function_iam_binding" "function-iam" {
   role        = "functions.functionInvoker"
   count       = local.create_function
   members = [
-    "system:allUsers",
+    "system:allUsers"
   ]
 }
