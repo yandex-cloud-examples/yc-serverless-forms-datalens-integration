@@ -16,19 +16,11 @@ locals {
   # This settings enables creation of the Cloud Function and its binding
   # Change it only after all the infrastructure resources have been created.
   create_function = 0 # Set this setting to 1 to enable creation of the Cloud Function
-}
 
-resource "yandex_vpc_network" "mynet" {
-  description = "Network for the Cloud Function and infrastructure"
-  name        = "forms-integration-network"
-}
+  # The following settings are predefined. Change them only if necessary.
 
-resource "yandex_vpc_subnet" "mysubnet" {
-  description    = "Subnet for the Cloud Function and infrastructure"
-  name           = "forms-integration-subnet"
-  zone           = "ru-central1-a"
-  network_id     = yandex_vpc_network.mynet.id
-  v4_cidr_blocks = ["10.1.0.0/16"]
+  # Settings for the Object Storage bucket
+  bucket_name = "forms-integration-bucket" # Name of the Object Storage bucket
 }
 
 resource "yandex_iam_service_account" "forms-sa" {
@@ -101,7 +93,7 @@ resource "yandex_iam_service_account_static_access_key" "s3-sa-static-key" {
 
 # Bucket for output data from the form in Yandex Forms
 resource "yandex_storage_bucket" "data-bucket" {
-  bucket     = "forms-integration-bucket"
+  bucket     = local.bucket_name
   max_size   = 10737418240 # Bytes
   access_key = yandex_iam_service_account_static_access_key.s3-sa-static-key.access_key
   secret_key = yandex_iam_service_account_static_access_key.s3-sa-static-key.secret_key
