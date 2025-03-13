@@ -1,5 +1,5 @@
-# Название сценария
+# Использование Yandex Forms совмесно с Yandex DataLens
 
-Описание сценария и инструкция по его применению.
+С помощью сервиса [Yandex Cloud Functions](https://cloud.yandex.ru/ru/docs/functions) вы можете сохранять данные из формы [Yandex Forms](https://yandex.cloud/ru/docs/forms/) в бакет [Object Storage](https://yandex.cloud/ru/docs/storage/). Это позволит использовать данные для построения чартов в сервисе [DataLens](https://yandex.cloud/ru/docs/datalens/) при помощи сервиса [Yandex Query](https://yandex.cloud/ru/docs/query/).
 
-Для практических руководств обязательна ссылка на документацию.
+ Создание такой функции и инфраструктуры для нее через Terraform описано в [практическом руководстве](https://cloud.yandex.ru/docs/tutorials/serverless/forms-and-datalens-integration), необходимый для настройки конфигурационный файл [forms-and-datalens-integration](forms-and-datalens-integration.tf) расположен в этом репозитории.
